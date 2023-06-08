@@ -1,0 +1,4 @@
+[development]
+DEBUG = true
+SECRET_KEY = 'a293fdba332203f6f2d9576ae7e73aec9b89d484'
+
