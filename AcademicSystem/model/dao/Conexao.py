@@ -1,4 +1,5 @@
 import sqlite3
+import sys
 
 class Conexao:
 
@@ -12,15 +13,16 @@ class Conexao:
             self.conn = sqlite3.connect("AcademicSystem.db")
             self.cursor = self.conn.cursor()
             self.connected = True
-        except:
-            print("E")
+        except Exception as erro:
+            print(sys.exc_info()[0], erro)
 
     def execute(self, comando: str):
         if self.connected:
             try:
                 self.conn.execute(comando)
                 return True
-            except:
+            except Exception as erro:
+                print(sys.exc_info()[0], erro)
                 return False
         
     def fetchall(self):

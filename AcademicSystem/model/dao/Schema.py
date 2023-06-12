@@ -12,7 +12,7 @@ def criaTabelas():
                             prontuario TEXT(10) NOT NULL,
                             senha TEXT(32) NOT NULL,
                             permissao INTEGER NOT NULL,
-                            ativo BOOLEAN NULL
+                            ativo BOOLEAN NOT NULL
                             );
                         """)
         
@@ -23,21 +23,21 @@ def criaTabelas():
                             cursoMatriculado TEXT(45) NOT NULL,
                             cpf TEXT(11) NOT NULL,
                             dataNasc DATE NOT NULL,
-                            ativo BOOLEAN NULL,
+                            ativo BOOLEAN NOT NULL,
                             idUsuarioAlu INTEGER NOT NULL,
                             FOREIGN KEY (idUsuarioAlu) REFERENCES usuario (idUsuario)
-                            ON ativo CASCADE ON UPDATE CASCADE
+                            ON DELETE CASCADE ON UPDATE CASCADE
                             );
                         """)
         
         #Tabela Coordenador
         conexao.execute("""CREATE TABLE IF NOT EXISTS coordenador (
-                            idCoordenador INTEGER NOT NULL PRIMARY KEY
+                            idCoordenador INTEGER NOT NULL PRIMARY KEY,
                             idUsuarioCoo INTEGER NOT NULL,
                             nome TEXT(45) NOT NULL,
-                            ativo BOOLEAN NULL,
+                            ativo BOOLEAN NOT NULL,
                             FOREIGN KEY (idUsuarioCoo) REFERENCES usuario (idUsuario)
-                            ON ativo CASCADE ON UPDATE CASCADE
+                            ON DELETE CASCADE ON UPDATE CASCADE
                             );
                         """)
         
@@ -47,7 +47,7 @@ def criaTabelas():
                             nome TEXT(45) NULL,
                             siglaCurso TEXT(45) NULL,
                             duracao INT NULL,
-                            ativo BOOLEAN NULL
+                            ativo BOOLEAN NOT NULL
                             );
                         """)
         
@@ -58,10 +58,10 @@ def criaTabelas():
                             nomeDisc TEXT(45) NOT NULL,
                             preReq1 INT NULL,
                             preReq2 INT NULL,
-                            ativo BOOLEAN NULL,
+                            ativo BOOLEAN NOT NULL,
                             idCursoDisc INTEGER NOT NULL,
                             FOREIGN KEY (idCursoDisc) REFERENCES curso (idCurso)
-                            ON ativo CASCADE ON UPDATE CASCADE
+                            ON DELETE CASCADE ON UPDATE CASCADE
                             );
                         """)
         
@@ -69,7 +69,7 @@ def criaTabelas():
         conexao.execute("""CREATE TABLE IF NOT EXISTS sala (
                         idSala INTEGER NOT NULL PRIMARY KEY,
                         local TEXT(45) NULL,
-                        ativo BOOLEAN NULL
+                        ativo BOOLEAN NOT NULL
                         );
                         """)
 
@@ -79,7 +79,7 @@ def criaTabelas():
                             diaSemana TEXT(14) NULL,
                             horaInicio TIME NULL,
                             horaFim TIME NULL,
-                            ativo BOOLEAN NULL
+                            ativo BOOLEAN NOT NULL
                             );
                         """)
         
@@ -88,7 +88,7 @@ def criaTabelas():
                             idProfessor INTEGER NOT NULL PRIMARY KEY,
                             nome TEXT(45) NULL,
                             prontuario TEXT(10) NULL,
-                            ativo BOOLEAN NULL
+                            ativo BOOLEAN NOT NULL
                             );
                         """)
         
@@ -97,17 +97,17 @@ def criaTabelas():
                             idTurma INTEGER NOT NULL PRIMARY KEY,
                             qtdeMaxAluno INT NULL,
                             turmacol TEXT(45) NULL,
-                            ativo BOOLEAN NULL,
+                            ativo BOOLEAN NOT NULL,
                             idSalaTur INTEGER NOT NULL,
                             idHoraTur INTEGER NOT NULL,
                             idProfTur INTEGER NOT NULL,
                             FOREIGN KEY (idSalaTur) REFERENCES sala
                             (idSala)
-                            ON ativo CASCADE ON UPDATE CASCADE,
+                            ON DELETE CASCADE ON UPDATE CASCADE,
                             FOREIGN KEY (idHoraTur) REFERENCES horario (idHorario)
-                            ON ativo CASCADE ON UPDATE CASCADE,
+                            ON DELETE CASCADE ON UPDATE CASCADE,
                             FOREIGN KEY (idProfTur) REFERENCES professor (idProfessor)
-                            ON ativo CASCADE ON UPDATE CASCADE
+                            ON DELETE CASCADE ON UPDATE CASCADE
                             );
                         """)
         
@@ -116,20 +116,20 @@ def criaTabelas():
                             idOfertaDisciplina INTEGER NOT NULL PRIMARY KEY,
                             semestreAno TEXT(10) NULL,
                             codigoOferta TEXT(7) NULL,
-                            ativo BOOLEAN NULL,
+                            ativo BOOLEAN NOT NULL,
                             idTurmaOfert INTEGER NOT NULL,
                             idDisciplinaOfert INTEGER NOT NULL,
                             FOREIGN KEY (idTurmaOfert) REFERENCES turma (idTurma)
-                            ON ativo CASCADE ON UPDATE CASCADE,
+                            ON DELETE CASCADE ON UPDATE CASCADE,
                             FOREIGN KEY (idDisciplinaOfert) REFERENCES disciplina (idDisciplina)
-                            ON ativo CASCADE ON UPDATE CASCADE
+                            ON DELETE CASCADE ON UPDATE CASCADE
                             );
                             """)
         
         #Tabela Lista Espera
         conexao.execute("""CREATE TABLE IF NOT EXISTS listaDeEspera (
                             idlistaDeEspera INTEGER NOT NULL PRIMARY KEY,
-                            ativo BOOLEAN NULL
+                            ativo BOOLEAN NOT NULL
                             );
                         """)
         
@@ -137,17 +137,17 @@ def criaTabelas():
         conexao.execute("""CREATE TABLE IF NOT EXISTS inscricao (
                             idInscricao INTEGER NOT NULL PRIMARY KEY,
                             dataIncricao DATE NULL,
-                            ativo BOOLEAN NULL,
+                            ativo BOOLEAN NOT NULL,
                             idAlunoInsc INTEGER NOT NULL,
                             idTurmaInsc INTEGER NOT NULL,
                             idListaInsc INTEGER NOT NULL,
                             FOREIGN KEY (idAlunoInsc) REFERENCES aluno
                             (idAluno)
-                            ON ativo CASCADE ON UPDATE CASCADE,
+                            ON DELETE CASCADE ON UPDATE CASCADE,
                             FOREIGN KEY (idTurmaInsc) REFERENCES turma (idTurma)
-                            ON ativo CASCADE ON UPDATE CASCADE,
+                            ON DELETE CASCADE ON UPDATE CASCADE,
                             FOREIGN KEY (idListaInsc) REFERENCES listaDeEspera (idlistaDeEspera)
-                            ON ativo CASCADE ON UPDATE CASCADE
+                            ON DELETE CASCADE ON UPDATE CASCADE
                             );
                         """)
         return True
