@@ -1,12 +1,12 @@
-from AcademicSystem.model.entity.OfertaDisciplina import OfertaDisciplina
+#from ..model.entity.OfertaDisciplina import OfertaDisciplina
 
 class ControleRealizarInscricao:
 
-    def filtrarOfertas(self) -> list[OfertaDisciplina]:
-        pass
+    def filtrarOfertas(self) -> int:
+        return 15
 
-    def confrimarInscricao(self) -> None:
-        pass
+    def confrimarInscricao(self) -> int:
+        return 10
 
     def adicionarListaEspera(self) -> None:
         pass
