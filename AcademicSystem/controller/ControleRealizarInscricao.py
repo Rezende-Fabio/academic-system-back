@@ -5,7 +5,7 @@ class ControleRealizarInscricao:
     def filtrarOfertas(self) -> int:
         return 15
 
-    def confrimarInscricao(self) -> int:
+    def confirmarInscricao(self) -> int:
         return 10
 
     def adicionarListaEspera(self) -> None:
