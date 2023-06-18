@@ -5,11 +5,11 @@ from unittest import TestCase
 class RegisterNewInstructor(TestCase):
     
     def test_filtrarOfertas(self):
-        contreleInscricao = ControleRealizarInscricao()
-        assert contreleInscricao.filtrarOfertas() == 15
+        controleRealizarInscricao = ControleRealizarInscricao()
+        self.assertEqual(controleRealizarInscricao.filtrarOfertas(), 15)
         
-    def test_confrimarInscricao(self):
-        contreleInscricao = ControleRealizarInscricao()
-        assert contreleInscricao.confrimarInscricao() == 9
+    def test_confirmarInscricao(self):
+        controleRealizarInscricao = ControleRealizarInscricao()
+        self.assertEqual(controleRealizarInscricao.confirmarInscricao(), 9)
         
 
