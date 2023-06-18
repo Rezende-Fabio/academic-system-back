@@ -2,9 +2,9 @@ from flask import Blueprint, jsonify, Response, flash
 from ..model.dao.Schema import criaTabelas
 import json
 
-crairBancoBlueprint = Blueprint("crairBanco", __name__)
+criarBancoBlueprint = Blueprint("criarBancoBlueprint", __name__)
 
-@crairBancoBlueprint.route("/criaBanco")
+@criarBancoBlueprint.route("/criaBanco")
 def criaBanco():
     if criaTabelas():
         dict = {

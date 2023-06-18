@@ -19,7 +19,7 @@ class Conexao:
     def execute(self, comando: str):
         if self.connected:
             try:
-                self.conn.execute(comando)
+                self.cursor.execute(comando)
                 return True
             except Exception as erro:
                 print(sys.exc_info()[0], erro)

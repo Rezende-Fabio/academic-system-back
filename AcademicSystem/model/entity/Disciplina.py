@@ -1,4 +1,3 @@
-import Disciplina
 from .Curso import Curso
 
 class Disciplina:
