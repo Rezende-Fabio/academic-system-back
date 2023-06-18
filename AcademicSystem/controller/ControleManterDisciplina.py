@@ -1,4 +1,5 @@
-from ..model.entity.Disciplina import Disciplina
+from AcademicSystem.model.entity.Disciplina import Disciplina
+from AcademicSystem.model.entity.Curso import Curso
 
 
 class ControleManterDisciplina:
@@ -6,10 +7,10 @@ class ControleManterDisciplina:
     def mostrarDisciplinas(self) -> list[Disciplina]:
         pass
 
-    def cadastrarDisciplina(self) -> None:
+    def cadastrarDisciplina(self, siglaDisc: str, nomeDisc: str, preRequisito: list[Disciplina], curso: Curso) -> None:
         pass
 
-    def mostrarDisciplinaDetalhado(self) -> Disciplina:
+    def mostrarDisciplinaDetalhado(self, id: int) -> Disciplina:
         pass
 
     def removerDisciplina(self, id: int) -> None:
