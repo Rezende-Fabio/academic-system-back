@@ -58,3 +58,19 @@ def LerDisciplinasPorID(id):
             return {"message": "Disciplina não encontrada"}
     except:
         return False
+    
+def CadastrarDisciplina(sigla, nome, preReq1, preReq2, ativo ,idCurso):
+    conexao = Conexao()
+    conexao.conect()
+
+    try:
+        sql = "INSERT INTO disciplina (siglaDisc, nomeDisc, preReq1, preReq2, ativo, idCursoDisc) VALUES (?, ?, ?, ?, ?, ?)"
+        parametros = (sigla, nome, bool(preReq1), bool(preReq2), int(ativo), int(idCurso))
+
+        if conexao.execute(sql, parametros):
+            conexao.commit()
+            conexao.disconnect()
+
+            return True
+    except:
+        return False

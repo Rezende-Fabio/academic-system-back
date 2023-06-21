@@ -16,11 +16,14 @@ class Conexao:
         except Exception as erro:
             print(sys.exc_info()[0], erro)
 
-    def execute(self, comando: str):
+    def execute(self, comando: str, parms = None):
         if self.connected:
             try:
-                self.cursor.execute(comando)
-                return True
+                if parms == None:
+                    self.cursor.execute(comando)
+                else:
+                    self.cursor.execute(comando, parms)
+                    return True
             except Exception as erro:
                 print(sys.exc_info()[0], erro)
                 return False

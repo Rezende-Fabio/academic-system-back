@@ -3,12 +3,11 @@ import json
 
 import AcademicSystem.model.dao.DisciplinaDao as DiscDao
 
+BODY = { "mensagem": "Algo deu errado" }
 crudDiscBlueprint = Blueprint('crudDiscs', __name__)
 
 @crudDiscBlueprint.route("/disciplinas")
 def ReadDiscs():
-    BODY = { "mensagem": "Algo deu errado" }
-
     try:
         DATA = DiscDao.LerDisciplinas()
         
@@ -22,8 +21,6 @@ def ReadDiscs():
 
 @crudDiscBlueprint.route("/disciplinas/<id>", methods=["GET"])
 def ReadDiscsPerId(id):
-    BODY = { "mensagem": "Algo deu errado" }
-
     try:
         DATA = DiscDao.LerDisciplinasPorID(id)
 
@@ -39,9 +36,23 @@ def ReadDiscsPerId(id):
 def AddNewDisc():
     requestBody = request.get_json()
 
-    # print(requestBody['id'])
+    try:
+        DATA = DiscDao.CadastrarDisciplina(requestBody['sigla'], requestBody['nomeDisc'], requestBody['preReq1'], requestBody['preReq2'], requestBody['ativo'] ,requestBody['idCurso'])
 
-    return requestBody['id']
+        if DATA:
+            resp = {
+                "sigla": requestBody['sigla'], 
+                "nomeDisc": requestBody['nomeDisc'], 
+                "preReq1": requestBody['preReq1'], 
+                "preReq2": requestBody['preReq2'],
+                "ativo": requestBody['ativo'],
+                "idCurso": requestBody['idCurso']
+            }
 
+            return Response(json.dumps(resp), status=200, mimetype='application/json')
+        
+        return Response(json.dumps(BODY), status=404, mimetype='application/json')
 
-
+    except:
+        return Response(json.dumps(BODY), status=500, mimetype='application/json')
+    

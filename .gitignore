@@ -6,3 +6,4 @@ AcademicSystem.db
 .pytest_cache
 .coverage
 htmlcov
+debug.py
