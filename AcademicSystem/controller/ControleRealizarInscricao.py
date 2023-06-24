@@ -1,4 +1,5 @@
 from ..model.entity.OfertaDisciplina import OfertaDisciplina
+from ..model.entity.Aluno import Aluno
 
 class ControleRealizarInscricao:
 

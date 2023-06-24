@@ -1,11 +1,15 @@
 from .Disciplina import Disciplina
+from datetime import date
 
 
 class Aluno:
     nomeAluno: str
     protuarioAluno: str
+    dataNasc: date
+    cpf: str
     cursoMatruculado: str
     disciplinasConcluidas: list[Disciplina]
+    ativoAluno: bool
 
     def set_nomeAluno(self, nomeAluno: str) -> None:
         self.nomeAluno = nomeAluno
@@ -13,11 +17,20 @@ class Aluno:
     def set_protuarioAluno(self, protuarioAluno: str) -> None:
         self.protuarioAluno = protuarioAluno
 
+    def set_dataNasc(self, dataNasc: date) -> None:
+        self.dataNasc = dataNasc
+
+    def set_cpf(self, cpf: str) -> None:
+        self.cpf = cpf
+
     def set_cursoMatruculado(self, cursoMatruculado: str) -> None:
         self.cursoMatruculado = cursoMatruculado
 
     def set_disciplinasConcluidas(self, disciplinasConcluidas: list[Disciplina]) -> None:
         self.disciplinasConcluidas = disciplinasConcluidas
+
+    def set_ativoAluno(self, ativoAluno: bool) -> None:
+        self.ativoAluno = ativoAluno
 
     def get_nomeAluno(self) -> str:
         return self.nomeAluno
@@ -25,8 +38,17 @@ class Aluno:
     def get_protuarioAluno(self) -> str:
         return self.protuarioAluno
     
+    def get_dataNasc(self) -> date:
+        return self.dataNasc
+
+    def get_cpf(self) -> str:
+        return self.cpf
+    
     def get_cursoMatruculado(self) -> str:
         return self.cursoMatruculado
     
     def get_disciplinasConcluidas(self) -> list[Disciplina]:
         return self.disciplinasConcluidas
+    
+    def get_ativoAluno(self) -> bool:
+        return self.ativoAluno
