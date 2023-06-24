@@ -32,7 +32,7 @@ def ReadDiscsPerId(id):
         return Response(json.dumps(BODY), status=500, mimetype='application/json')
 
 
-@crudDiscBlueprint.route('/addDisciplina', methods=["POST"])
+@crudDiscBlueprint.route('/disciplina', methods=["POST"])
 def AddNewDisc():
     requestBody = request.get_json()
 
@@ -50,6 +50,45 @@ def AddNewDisc():
             }
 
             return Response(json.dumps(resp), status=200, mimetype='application/json')
+        
+        return Response(json.dumps(BODY), status=404, mimetype='application/json')
+
+    except:
+        return Response(json.dumps(BODY), status=500, mimetype='application/json')
+    
+@crudDiscBlueprint.route('/disciplina/<id>', methods=["PUT"])
+def UpdateDisc(id):
+    requestBody = request.get_json()
+
+    try:
+        DATA = DiscDao.AtualizarDisciplina(requestBody['sigla'], requestBody['nomeDisc'], requestBody['preReq1'], requestBody['preReq2'], requestBody['ativo'] ,requestBody['idCurso'])
+
+        if DATA:
+            resp = {
+                "sigla": requestBody['sigla'], 
+                "nomeDisc": requestBody['nomeDisc'], 
+                "preReq1": requestBody['preReq1'], 
+                "preReq2": requestBody['preReq2'],
+                "ativo": requestBody['ativo'],
+                "idCurso": requestBody['idCurso']
+            }
+
+            return Response(json.dumps(resp), status=200, mimetype='application/json')
+        
+        return Response(json.dumps(BODY), status=404, mimetype='application/json')
+
+    except:
+        return Response(json.dumps(BODY), status=500, mimetype='application/json')
+    
+
+@crudDiscBlueprint.route('/disciplinas/<id>', methods=["DELETE"])
+def DeleteDisc(id):
+    try:
+        DATA = DiscDao.DeletarDiscipina(id)
+
+        if DATA:
+
+            return Response(status=204, mimetype='application/json')
         
         return Response(json.dumps(BODY), status=404, mimetype='application/json')
 

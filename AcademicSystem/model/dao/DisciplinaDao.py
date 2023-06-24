@@ -28,10 +28,11 @@ def LerDisciplinas():
             conexao.disconnect()
             return disciplinas
         else:
-            return {"message": "Não há disciplinas cadastradas"}
+            return {"statusCode": 201, "message": "Não há disciplinas cadastradas"}
 
     except:
         return False
+
 
 def LerDisciplinasPorID(id):
     conexao = Conexao()
@@ -41,7 +42,7 @@ def LerDisciplinasPorID(id):
         conexao.execute(f"select * from disciplina where idDisciplina={id};")
 
         disciplina = conexao.fetchall()
-        
+
         if disciplina:
             for item in range(len(disciplina)):
                 conexao.disconnect()
@@ -55,22 +56,72 @@ def LerDisciplinasPorID(id):
                     "idCursoDisc": disciplina[item][6],
                 }
         else:
-            return {"message": "Disciplina não encontrada"}
+            return {"statusCode": 201, "message": "Disciplina não encontrada"}
     except:
         return False
-    
-def CadastrarDisciplina(sigla, nome, preReq1, preReq2, ativo ,idCurso):
+
+
+def CadastrarDisciplina(sigla, nome, preReq1, preReq2, ativo, idCurso):
     conexao = Conexao()
     conexao.conect()
 
     try:
         sql = "INSERT INTO disciplina (siglaDisc, nomeDisc, preReq1, preReq2, ativo, idCursoDisc) VALUES (?, ?, ?, ?, ?, ?)"
-        parametros = (sigla, nome, bool(preReq1), bool(preReq2), int(ativo), int(idCurso))
+        parametros = (
+            sigla,
+            nome,
+            bool(preReq1),
+            bool(preReq2),
+            int(ativo),
+            int(idCurso),
+        )
 
         if conexao.execute(sql, parametros):
             conexao.commit()
             conexao.disconnect()
 
             return True
+    except:
+        return False
+
+
+def AtualizarDisciplina(sigla, nome, preReq1, preReq2, ativo, idCurso):
+    conexao = Conexao()
+    conexao.conect()
+
+    try:
+        sql = "UPDATE disciplina SET siglaDisc = ? WHERE idDisciplina = ?"
+        parametros = (
+            sigla,
+            nome,
+            bool(preReq1),
+            bool(preReq2),
+            int(ativo),
+            int(idCurso),
+        )
+
+        if conexao.execute(sql, parametros):
+            conexao.commit()
+            conexao.disconnect()
+
+            return True
+    except:
+        return False
+
+
+def DeletarDiscipina(id):
+    conexao = Conexao()
+    conexao.conect()
+
+    try:
+        sql = "DELETE FROM disciplina WHERE idDisciplina=?;"
+        parametros = (id)
+
+        if conexao.execute(sql, parametros):
+            conexao.commit()
+            conexao.disconnect()
+
+            return True
+        
     except:
         return False
