@@ -53,7 +53,7 @@ def criaTabelas():
         
         #Tabela Discipina
         conexao.execute("""CREATE TABLE IF NOT EXISTS disciplina (
-                            idDisciplina INTEGER NOT NULL PRIMARY KEY,
+                            idDisciplina INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                             siglaDisc TEXT(5) NOT NULL,
                             nomeDisc TEXT(45) NOT NULL,
                             preReq1 INT NULL,

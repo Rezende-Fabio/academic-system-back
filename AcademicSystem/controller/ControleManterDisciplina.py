@@ -1,5 +1,4 @@
-from AcademicSystem.model.entity.Disciplina import Disciplina
-from AcademicSystem.model.entity.Curso import Curso
+from ..model.entity.Disciplina import Disciplina
 
 
 class ControleManterDisciplina:
