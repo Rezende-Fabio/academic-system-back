@@ -45,3 +45,13 @@ class OfertaDisciplina:
     
     def get_ativoOferta(self) -> bool:
         return self.ativoOferta
+    
+    def toJson(self) -> dict:
+        json = {
+            "idOferta": self.idOferta,
+            "smestreAno": self.semestreAno,
+            "codigoOferta": self.codigoOferta,
+            "turma": self.turma.toJson()
+        }
+
+        return json

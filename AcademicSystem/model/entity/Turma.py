@@ -45,3 +45,14 @@ class Turma:
 
     def verificaQtdeAlunoMatriculado(self) -> bool:
         pass
+
+    def toJson(self) -> dict:
+        json = {
+            "qtdeMaximaAluno": self.qtdeMaximaAluno,
+            "idTurma": self.idTurma,
+            "professor": self.professor.toJson(),
+            "sala": self.sala.toJson(),
+            "horario": self.horario.toJson(),
+        }
+
+        return json

@@ -35,3 +35,9 @@ class Disciplina:
     
     def get_credito(self) -> int:
         return self.credito
+    
+    def toDisciplina(self, json: dict) -> None:
+        self.idDisciplina = json["idDisciplina"]
+        self.siglaDisc = json["siglaDisc"]
+        self.nomeDisc = json["nomeDisc"]
+        self.credito = json["credito"]

@@ -4,6 +4,7 @@ from .Curso import Curso
 
 
 class Aluno:
+    idAluno: int
     nomeAluno: str
     protuarioAluno: str
     dataNasc: date
@@ -11,6 +12,9 @@ class Aluno:
     cursoMatruculado: Curso
     disciplinasConcluidas: list[Disciplina]
     ativoAluno: bool
+
+    def set_idAluno(self, id: int) -> None:
+        self.idAluno = id
 
     def set_nomeAluno(self, nomeAluno: str) -> None:
         self.nomeAluno = nomeAluno
@@ -33,6 +37,9 @@ class Aluno:
     def set_ativoAluno(self, ativoAluno: bool) -> None:
         self.ativoAluno = ativoAluno
 
+    def get_idAluno(self) -> int:
+        return self.idAluno
+
     def get_nomeAluno(self) -> str:
         return self.nomeAluno
     
@@ -53,3 +60,10 @@ class Aluno:
     
     def get_ativoAluno(self) -> bool:
         return self.ativoAluno
+    
+    def toAluno(self, json: dict) -> None:
+        self.idAluno = json["idAluno"]
+        self.nomeAluno = json["nomeAluno"]
+        self.cpf = json["cpf"]
+        self.protuarioAluno = json["protuarioAluno"]
+        self.dataNasc = json["dataNasc"]

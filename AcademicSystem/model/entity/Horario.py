@@ -36,3 +36,12 @@ class Horario:
     
     def get_ativoHorario(self) -> bool:
         return self.ativoHorario
+    
+    def toJson(self) -> dict:
+        json = {
+            "diaSemana": self.diaSemana,
+            "horaInicio": self.horaInicio,
+            "horaFim": self.horaFim,
+        }
+
+        return json

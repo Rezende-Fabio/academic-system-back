@@ -33,6 +33,7 @@ def aluno():
 
     # Mock da Classe Aluno
     aluno = Aluno()
+    aluno.set_idAluno(1)
     aluno.set_cpf("51050601709")
     aluno.set_dataNasc(date.today())
     aluno.set_cursoMatruculado(curso)

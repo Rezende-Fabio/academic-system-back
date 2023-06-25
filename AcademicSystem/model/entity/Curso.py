@@ -44,3 +44,9 @@ class Curso:
     
     def get_ativoCurso(self) -> bool:
         return self.ativoCurso
+    
+    def toCurso(self, json: dict) -> None:
+        self.idCurso = json["idCurso"]
+        self.nomeCurso = json["nomeCurso"]
+        self.siglaCurso = json["siglaCurso"]
+        self.duracaoCurso = json["duracaoCurso"]

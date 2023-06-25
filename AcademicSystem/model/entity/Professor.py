@@ -28,3 +28,12 @@ class Professor:
     
     def get_ativoProfessor(self) -> bool:
         return self.ativoProfessor
+    
+    def toJson(self) -> dict:
+        json = {
+            "idProfessor": self.idProfessor,
+            "nomeProf": self.nomeProf,
+            "prontuario": self.prontuario
+        }
+
+        return json

@@ -22,3 +22,10 @@ class Sala:
     
     def get_ativoSala(self) -> int:
         return self.ativoSala
+    
+    def toJson(self) -> dict:
+        json = {
+            "local": self.local
+        }
+
+        return json
