@@ -1,4 +1,7 @@
+from datetime import date
 from flask import Blueprint, jsonify, Response, flash
+
+
 from ..model.dao.Schema import criaTabelas
 import json
 
@@ -20,3 +23,4 @@ def criaBanco():
         resp = Response(data, status=500, mimetype='application/json')
 
     return resp
+

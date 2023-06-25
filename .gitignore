@@ -7,3 +7,4 @@ AcademicSystem.db
 .coverage
 htmlcov
 debug.py
+*.txt
