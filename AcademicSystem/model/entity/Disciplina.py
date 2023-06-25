@@ -1,11 +1,13 @@
-from .Curso import Curso
 
 class Disciplina:
+    idDisciplina: int
     siglaDisc: str
     nomeDisc: str
     preRequisito: list["Disciplina"]
     credito: int
-    curso: Curso
+
+    def set_idDisciplina(self, idDisciplina) -> None:
+        self.idDisciplina = idDisciplina
 
     def set_siglaDisc(self, siglaDisc: str) -> None:
         self.siglaDisc = siglaDisc
@@ -19,8 +21,8 @@ class Disciplina:
     def set_credito(self, credito: int) -> None:
         self.credito = credito
 
-    def set_curso(self, curso: Curso) -> None:
-        self.curso = curso
+    def get_idDisciplina(self) -> int:
+        return self.idDisciplina
 
     def get_siglaDisc(self) -> str:
         return self.siglaDisc
@@ -33,6 +35,3 @@ class Disciplina:
     
     def get_credito(self) -> int:
         return self.credito
-    
-    def get_curso(self) -> Curso:
-        return self.curso

@@ -1,4 +1,4 @@
-from AcademicSystem.model.dao.Conexao import Conexao
+from .Conexao import Conexao
 
 def LerDisciplinas():
     conexao = Conexao()

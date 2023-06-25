@@ -1,5 +1,6 @@
 from .Disciplina import Disciplina
 from datetime import date
+from .Curso import Curso
 
 
 class Aluno:
@@ -7,7 +8,7 @@ class Aluno:
     protuarioAluno: str
     dataNasc: date
     cpf: str
-    cursoMatruculado: str
+    cursoMatruculado: Curso
     disciplinasConcluidas: list[Disciplina]
     ativoAluno: bool
 
@@ -23,7 +24,7 @@ class Aluno:
     def set_cpf(self, cpf: str) -> None:
         self.cpf = cpf
 
-    def set_cursoMatruculado(self, cursoMatruculado: str) -> None:
+    def set_cursoMatruculado(self, cursoMatruculado: Curso) -> None:
         self.cursoMatruculado = cursoMatruculado
 
     def set_disciplinasConcluidas(self, disciplinasConcluidas: list[Disciplina]) -> None:
@@ -44,7 +45,7 @@ class Aluno:
     def get_cpf(self) -> str:
         return self.cpf
     
-    def get_cursoMatruculado(self) -> str:
+    def get_cursoMatruculado(self) -> Curso:
         return self.cursoMatruculado
     
     def get_disciplinasConcluidas(self) -> list[Disciplina]:

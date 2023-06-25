@@ -1,6 +1,6 @@
 from datetime import datetime
 from .Aluno import Aluno
-from.OfertaDisciplina import OfertaDisciplina
+from .OfertaDisciplina import OfertaDisciplina
 
 
 class Inscricao:

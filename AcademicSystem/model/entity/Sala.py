@@ -1,18 +1,24 @@
-from .Turma import Turma
 
 
 class Sala:
+    idSala: int
     local: str
-    turma: Turma
+    ativoSala: bool
+
+    def set_idSala(self, idSala: int) -> None:
+        self.idSala = idSala
 
     def set_local(self, local: str) -> None:
         self.local = local
 
-    def set_turma(self, turma: Turma) -> None:
-        self.turma = turma
+    def set_ativoSala(self, ativo: bool) -> None:
+        self.ativoSala = ativo
+
+    def get_idSala(self) -> int:
+        return self.idSala
 
     def get_local(self) -> str:
         return self.local
     
-    def get_turma(self) -> Turma:
-        return self.turma
+    def get_ativoSala(self) -> int:
+        return self.ativoSala

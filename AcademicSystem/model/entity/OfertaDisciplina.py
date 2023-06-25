@@ -3,10 +3,15 @@ from .Turma import Turma
 
 
 class OfertaDisciplina:
+    idOferta: int
     semestreAno: str
     codigoOferta: str
     disciplina: Disciplina
     turma: Turma
+    ativoOferta: bool
+
+    def set_idOferta(self, id: int) -> None:
+        self.idOferta = id
 
     def set_semestreAno(self, semestreAno: str) -> None:
         self.semestreAno = semestreAno
@@ -20,6 +25,12 @@ class OfertaDisciplina:
     def set_turma(self, turma: Turma) -> None:
         self.turma = turma
 
+    def set_ativoOferta(self, ativoOferta: bool) -> None:
+        self.ativoOferta = ativoOferta
+
+    def get_idOferta(self) -> int:
+        return self.idOferta
+
     def get_semestreAno(self) -> str:
         return self.semestreAno
     
@@ -31,3 +42,6 @@ class OfertaDisciplina:
     
     def get_turma(self) -> Turma:
         return self.turma
+    
+    def get_ativoOferta(self) -> bool:
+        return self.ativoOferta

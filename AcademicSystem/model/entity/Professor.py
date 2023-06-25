@@ -1,10 +1,12 @@
-from .Turma import Turma
-
 
 class Professor:
+    idProfessor: int
     nomeProf: str
     prontuario: str
-    turma: Turma
+    ativoProfessor: bool
+
+    def set_idProfessor(self, idProfessor: int) -> None:
+        self.idProfessor = idProfessor
 
     def set_nomeProf(self, nomeProf: str) -> None:
         self.nomeProf = nomeProf
@@ -12,8 +14,8 @@ class Professor:
     def set_prontuario(self, prontuario: str) -> None:
         self.prontuario = prontuario
 
-    def set_turma(self, turma: Turma) -> None:
-        self.turma = turma
+    def set_ativoProfessor(self, ativo: bool) -> None:
+        self.ativoProfessor = ativo
 
     def get_nomeProf(self) -> str:
         return self.nomeProf
@@ -21,5 +23,8 @@ class Professor:
     def get_prontuario(self) -> str:
         return self.prontuario
     
-    def get_turma(self) -> Turma:
-        return self.turma
+    def get_idProfessor(self) -> int:
+        return self.idProfessor
+    
+    def get_ativoProfessor(self) -> bool:
+        return self.ativoProfessor

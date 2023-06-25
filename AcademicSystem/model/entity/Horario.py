@@ -1,12 +1,14 @@
 from datetime import datetime
-from .Turma import Turma
-
 
 class Horario:
+    idHorario: int
     diaSemana: str
     horaInicio: datetime
     horaFim: datetime
-    turma: Turma
+    ativoHorario: bool
+
+    def set_idHorario(self, id: int) -> None:
+        self.idHorario = id
 
     def set_diaSemana(self, diaSemana: str) -> None:
         self.diaSemana = diaSemana
@@ -17,8 +19,11 @@ class Horario:
     def set_horaFim(self, horaFim: datetime) -> None:
         self.horaFim = horaFim
 
-    def set_turma(self, turma: Turma) -> None:
-        self.turma = turma
+    def set_ativoHorario(self, ativo: bool) -> None:
+        self.ativoHorario = ativo
+
+    def get_idHorario(self) -> int:
+        return self.idHorario
 
     def get_diaSemana(self) -> str:
         return self.diaSemana
@@ -29,5 +34,5 @@ class Horario:
     def get_horaFim(self) -> datetime:
         return self.horaFim
     
-    def get_turma(self) -> Turma:
-        return self.turma
+    def get_ativoHorario(self) -> bool:
+        return self.ativoHorario
