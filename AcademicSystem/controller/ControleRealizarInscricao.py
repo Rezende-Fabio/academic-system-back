@@ -28,16 +28,35 @@ class ControleRealizarInscricao:
         # Monta lista com as ofertas das Disciplinas
         listaOfertas = []
         for indice, disciplina in enumerate(disciplinasAluno):
-            ofertaDisciplina = realizarInscricaoDao.consultaOfertas(disciplina)
+            ofertaDisciplina = realizarInscricaoDao.consultaOfertasDisciplina(disciplina)
             if ofertaDisciplina != None:
                 listaOfertas.append(ofertaDisciplina)
 
         return listaOfertas
 
-    def confirmarInscricao(self) -> None:
-        pass
 
-    def adicionarListaEspera(self, insc: Inscricao) -> None:
+    def confirmarInscricao(self, listaIdOfertas: list) -> list:
+        realizarInscricaoDao = RelizarInscricaoDao()
+        ofertasIndisponives = []
+        listaOfertas = []
+        # Consulta as ofertas que foram selecinadas
+        for id in listaIdOfertas:
+            oferta = realizarInscricaoDao.consultaOfertasId(id)
+            listaOfertas.append(oferta)
+        
+        # Soma os créditos das disciplias
+        somaCredito = 0
+        for oferta in listaOfertas:
+            somaCredito += oferta.get_disciplina().get_credito()
+
+        # Verifica se a quantidade de crédito é maior que 20
+        if somaCredito > 20:
+            return []
+        else:
+            pass
+
+
+    def adicionarListaEspera(self, insc: Inscricao) -> list:
         IDTURMA = insc.get_ofertaDisciplina().get_turma().get_idTurma()
 
         realizarInscricaoDao = RelizarInscricaoDao()

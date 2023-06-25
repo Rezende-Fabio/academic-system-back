@@ -41,3 +41,13 @@ class Disciplina:
         self.siglaDisc = json["siglaDisc"]
         self.nomeDisc = json["nomeDisc"]
         self.credito = json["credito"]
+
+    def toJson(self) -> dict:
+        json = {
+            "idDisciplina" : self.idDisciplina,
+            "siglaDisc": self.siglaDisc,
+            "nomeDisc": self.nomeDisc,
+            "credito": self.credito
+        }
+
+        return json

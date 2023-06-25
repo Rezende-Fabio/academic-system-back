@@ -62,7 +62,7 @@ class RelizarInscricaoDao:
             return None
         
 
-    def consultaOfertas(self, disciplina: Disciplina) -> OfertaDisciplina:
+    def consultaOfertasDisciplina(self, disciplina: Disciplina) -> OfertaDisciplina:
         conexao = Conexao()
         conexao.conect()
         conexao.execute(f"SELECT * FROM ofertaDisciplina ofert WHERE ofert.idDisciplinaOfert = {disciplina.get_idDisciplina()}")
@@ -80,6 +80,47 @@ class RelizarInscricaoDao:
         
         else:
             return None
+        
+
+    def consultaOfertasId(self, id: int) -> OfertaDisciplina:
+        conexao = Conexao()
+        conexao.conect()
+        conexao.execute(f"SELECT * FROM ofertaDisciplina ofert WHERE ofert.idOfertaDisciplina = {id}")
+        respDao = conexao.fetchall()
+        for oferta in respDao:
+            ofertaDisciplina = OfertaDisciplina()
+            ofertaDisciplina.set_idOferta(oferta[0])
+            ofertaDisciplina.set_disciplina(self.consultaDisciplina(oferta[5]))
+            ofertaDisciplina.set_codigoOferta(oferta[2])
+            ofertaDisciplina.set_semestreAno(oferta[1])
+            ofertaDisciplina.set_turma(self.consultaTurma(oferta[4]))
+
+        conexao.disconnect()
+        return ofertaDisciplina
+        
+        
+    def consultaDisciplina(self, idDisciplina: int) -> Disciplina:
+        conexao = Conexao()
+        conexao.conect()
+        conexao.execute(f"SELECT * FROM disciplina disc WHERE disc.idDisciplina = {idDisciplina}")
+        respDao = conexao.fetchall()
+        for disciplina in respDao:
+            disciplinaOferta = Disciplina()
+            disciplinaOferta.set_idDisciplina(disciplina[0])
+            disciplinaOferta.set_siglaDisc(disciplina[1])
+            disciplinaOferta.set_nomeDisc(disciplina[2])
+            disciplinaOferta.set_credito(disciplina[5])
+            listaPreRec = []
+            #Consulta os pré-requisitos da Disciplina
+            for x in [3, 4]:
+                preRec = self.consultaPreRequisito(disciplina[x])
+                if preRec != None:
+                    listaPreRec.append(preRec)
+
+            disciplinaOferta.set_preRequisito(listaPreRec)
+        
+        conexao.disconnect()
+        return disciplinaOferta
 
 
     def consultaTurma(self, idTurma: int) -> Turma:

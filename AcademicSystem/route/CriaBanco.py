@@ -1,9 +1,9 @@
 from datetime import date
 from flask import Blueprint, jsonify, Response, flash
-
-
 from ..model.dao.Schema import criaTabelas
 import json
+
+from ..controller.ControleRealizarInscricao import ControleRealizarInscricao
 
 criarBancoBlueprint = Blueprint("criarBancoBlueprint", __name__)
 

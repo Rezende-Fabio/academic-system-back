@@ -49,7 +49,8 @@ class OfertaDisciplina:
     def toJson(self) -> dict:
         json = {
             "idOferta": self.idOferta,
-            "smestreAno": self.semestreAno,
+            "semestreAno": self.semestreAno,
+            "disciplina": self.disciplina.toJson(),
             "codigoOferta": self.codigoOferta,
             "turma": self.turma.toJson()
         }
