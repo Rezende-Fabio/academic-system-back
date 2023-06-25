@@ -4,10 +4,14 @@ from .Sala import Sala
 
 
 class Turma:
+    idTurma: int
     qtdeMaximaAluno: int
     professor: Professor
     sala: Sala
     horario: Horario
+
+    def set_idTurma(self, id: int) -> None:
+        self.idTurma = id
 
     def set_qtdeMaximaAluno(self, qtdeMax: int) -> None:
         self.qtdeMaximaAluno = qtdeMax
@@ -20,6 +24,9 @@ class Turma:
 
     def set_horario(self, horario: Horario) -> None:
         self.horario = horario
+
+    def get_idTurma(self) -> int:
+        return self.idTurma
 
     def get_qtdeMaximaAluno(self) -> int:
         return self.qtdeMaximaAluno

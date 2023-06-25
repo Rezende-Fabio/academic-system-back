@@ -89,6 +89,7 @@ class RelizarInscricaoDao:
         respDao = conexao.fetchall()
         for turma in respDao:
             turmaOferta = Turma()
+            turmaOferta.set_idTurma(turma[0])
             turmaOferta.set_qtdeMaximaAluno(turma[1])
             turmaOferta.set_professor(self.consultaProfessor(turma[6]))
             turmaOferta.set_sala(self.consultaSala(turma[4]))

@@ -38,7 +38,7 @@ class ControleRealizarInscricao:
         pass
 
     def adicionarListaEspera(self, insc: Inscricao) -> None:
-        IDTURMA = insc.get_ofertaDisciplina().get_turma()
+        IDTURMA = insc.get_ofertaDisciplina().get_turma().get_idTurma()
 
         realizarInscricaoDao = RelizarInscricaoDao()
         qtdMaximaAlunos = realizarInscricaoDao.consultaTurma(IDTURMA).get_qtdeMaximaAluno()
