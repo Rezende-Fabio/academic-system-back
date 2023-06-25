@@ -140,7 +140,16 @@ class RelizarInscricaoDao:
             horarioTurma.set_diaSemana(horario[1])
             horarioTurma.set_horaInicio(horario[2])
             horarioTurma.set_horaFim(horario[3])
-            horarioTurma.set_ativoTurma(horario[4])
+            horarioTurma.set_ativoHorario(horario[4])
 
         conexao.disconnect()
         return horarioTurma
+    
+    def consultaQtdeAlunosTurma(self, idTurma: int) -> int:
+        conexao = Conexao()
+        conexao.conect()
+        conexao.execute(f"SELECT COUNT(*) FROM inscricao i INNER JOIN turma t ON i.idTurmaInsc = t.idTurma WHERE t.idTurma={idTurma};")
+
+        respDao = conexao.fetchall()
+
+        return respDao[0][0]
