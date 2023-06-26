@@ -27,7 +27,7 @@ def listaOfertas():
     return Response(json.dumps({"ofertas": listaOferta}), status=200, mimetype='application/json')
 
 
-@realizarInscricaoBlue.route("/verifica-requistos", methods=["POST"])
+@realizarInscricaoBlue.route("/verifica-requisitos", methods=["POST"])
 def verificarRequisitos():
     controleRealizarInscricao = ControleRealizarInscricao()
     data = request.get_json()
