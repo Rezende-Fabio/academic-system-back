@@ -27,3 +27,13 @@ def criaBanco():
 
     return resp
 
+
+@criarBancoBlueprint.route("/teste")
+def teste():
+    controleRealizarInscricao = ControleRealizarInscricao()
+    listaOferats = [1, 2]
+    respControler = controleRealizarInscricao.verificarRequisitos(listaOferats)
+    if respControler:
+        pass
+    else:
+        Response(json.dumps({"msg": "Limite de crédito foi atingido"}), status=400, mimetype="application/json")

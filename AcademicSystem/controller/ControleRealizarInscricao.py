@@ -38,7 +38,7 @@ class ControleRealizarInscricao:
         return listaOfertas
 
 
-    def verificarRequisitos(self, listaIdOfertas: list, aluno: Aluno) -> list:
+    def verificarRequisitos(self, listaIdOfertas: list) -> list:
         realizarInscricaoDao = RelizarInscricaoDao()
         ofertasIndisponives = []
         listaOfertas = []
@@ -47,12 +47,11 @@ class ControleRealizarInscricao:
             oferta = realizarInscricaoDao.consultaOfertasId(id)
             listaOfertas.append(oferta)
         
-        #  Verifica a qauntidade de alunos nas turmas
-        for indice, oferta in enumerate(listaOfertas):
+        #  Verifica a quantidade de alunos nas turmas
+        for oferta in listaOfertas:
             qtdAlunosTurma = realizarInscricaoDao.consultaQtdeAlunosTurma(oferta.get_turma().get_idTurma())
             if qtdAlunosTurma >= oferta.get_turma().get_qtdeMaximaAluno():
                 ofertasIndisponives.append(oferta)
-                del listaOfertas[indice]
         
         # Soma os créditos das disciplias
         somaCredito = 0
@@ -63,10 +62,23 @@ class ControleRealizarInscricao:
         if somaCredito > 20:
             return ([])
         else:
-            
+            diaSemana = ''
+            horaInicio = None
+            horaFim = None
+            # Veririfica choque de horario
+            for oferta in listaOfertas:
+                if oferta.get_turma().get_horario().get_diaSemana() == diaSemana:
+                    if oferta.get_turma().get_horario().get_horaInicio() == horaInicio and oferta.get_turma().get_horario().get_horaFim() == horaFim:
+                        return ([])
+                
+                diaSemana = oferta.get_turma().get_horario().get_diaSemana()
+                horaInicio = oferta.get_turma().get_horario().get_horaInicio()
+                horaFim = oferta.get_turma().get_horario().get_horaFim()
+
+        return [listaIdOfertas, ofertasIndisponives]
 
 
-    def confirmarInscricao(self,) -> bool:
+    def confirmarInscricao(self) -> bool:
         pass
 
 
