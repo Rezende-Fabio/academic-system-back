@@ -6,16 +6,19 @@ from ..model.dao.RealizarInscricaoDao import RelizarInscricaoDao
 
 
 class ControleRealizarInscricao:
+
     def filtrarOfertas(self, aluno: Aluno) -> list[OfertaDisciplina]:
         realizarInscricaoDao = RelizarInscricaoDao()
-        # Consulta as Disiplinas do curso do Aluno
-        disciplinasAluno = realizarInscricaoDao.verificarDisciplinaAluno(aluno)
 
-        # Remove as disciplinas concluidas pelo Aluno
-        for indice, disciplina in enumerate(disciplinasAluno):
-            for disciplinaConc in aluno.get_disciplinasConcluidas():
-                if disciplina.get_siglaDisc() == disciplinaConc.get_siglaDisc():
-                    del disciplinasAluno[indice]
+        # Monta uma lista com todas as disciplinas que o aluno já concluiu
+        where = "("
+        for disciplinaConc in aluno.get_disciplinasConcluidas():
+            where += f'"{disciplinaConc.get_siglaDisc()}", '
+        where += ")"
+        where = where.replace(", )", ")")
+
+        # Consulta as Disiplinas que o aluno pode se inscrever
+        disciplinasAluno = realizarInscricaoDao.verificarDisciplinaAluno(aluno, where)
 
         # Remove as disciplinas que tem pré-requisitos que não foram concluidos
         for indice, disciplina in enumerate(disciplinasAluno):
@@ -35,7 +38,7 @@ class ControleRealizarInscricao:
         return listaOfertas
 
 
-    def confirmarInscricao(self, listaIdOfertas: list) -> list:
+    def verificarRequisitos(self, listaIdOfertas: list, aluno: Aluno) -> list:
         realizarInscricaoDao = RelizarInscricaoDao()
         ofertasIndisponives = []
         listaOfertas = []
@@ -44,6 +47,13 @@ class ControleRealizarInscricao:
             oferta = realizarInscricaoDao.consultaOfertasId(id)
             listaOfertas.append(oferta)
         
+        #  Verifica a qauntidade de alunos nas turmas
+        for indice, oferta in enumerate(listaOfertas):
+            qtdAlunosTurma = realizarInscricaoDao.consultaQtdeAlunosTurma(oferta.get_turma().get_idTurma())
+            if qtdAlunosTurma >= oferta.get_turma().get_qtdeMaximaAluno():
+                ofertasIndisponives.append(oferta)
+                del listaOfertas[indice]
+        
         # Soma os créditos das disciplias
         somaCredito = 0
         for oferta in listaOfertas:
@@ -51,9 +61,13 @@ class ControleRealizarInscricao:
 
         # Verifica se a quantidade de crédito é maior que 20
         if somaCredito > 20:
-            return []
+            return ([])
         else:
-            pass
+            
+
+
+    def confirmarInscricao(self,) -> bool:
+        pass
 
 
     def adicionarListaEspera(self, insc: Inscricao) -> list:

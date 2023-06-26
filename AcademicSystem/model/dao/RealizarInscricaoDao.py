@@ -15,11 +15,11 @@ class RelizarInscricaoDao:
         conexao.execute("SELECT curso.id FROM curso")
 
 
-    def verificarDisciplinaAluno(self, aluno: Aluno) -> list[Disciplina]:
+    def verificarDisciplinaAluno(self, aluno: Aluno, disciplinaConc: str) -> list[Disciplina]:
         conexao = Conexao()
         conexao.conect()
         cursoAluno = aluno.get_cursoMatruculado().get_idCurso()
-        conexao.execute(f"SELECT * FROM disciplina disc WHERE disc.idCursoDisc = {cursoAluno}")
+        conexao.execute(f"SELECT * FROM disciplina disc WHERE disc.idCursoDisc = {cursoAluno} AND disc.siglaDisc NOT IN {disciplinaConc}")
         respDao = conexao.fetchall()
         listaDisciplina = []
         #Adiciona Disciplinas em uma lista

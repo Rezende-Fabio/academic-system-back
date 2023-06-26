@@ -4,6 +4,9 @@ from ..model.dao.Schema import criaTabelas
 import json
 
 from ..controller.ControleRealizarInscricao import ControleRealizarInscricao
+from ..model.entity.Aluno import Aluno
+from ..model.entity.Curso import Curso
+from ..model.entity.Disciplina import Disciplina
 
 criarBancoBlueprint = Blueprint("criarBancoBlueprint", __name__)
 
