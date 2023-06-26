@@ -76,7 +76,7 @@ class ControleRealizarInscricao:
         return [[ofertaDisp.toJson() for ofertaDisp in listaOfertas], [ofertaInd.toJson() for ofertaInd in ofertasIndisponives]]
 
 
-    def confirmarInscricao(self) -> bool:
+    def confirmarInscricao(self, listaIdsOfertas: list, aluno: Aluno) -> bool:
         pass
 
 

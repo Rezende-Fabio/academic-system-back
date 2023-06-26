@@ -25,9 +25,3 @@ class Inscricao:
     
     def get_ofertaDisciplina(self) -> OfertaDisciplina:
         return self.ofertaDisciplina
-
-    def verificaChoqueHorario(self) -> bool:
-        pass
-
-    def verificaLimiteCredito(self) -> bool:
-        pass
