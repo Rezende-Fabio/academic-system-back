@@ -3,6 +3,7 @@ from AcademicSystem.model.entity.ListaEspera import ListaEspera
 from ..model.entity.OfertaDisciplina import OfertaDisciplina
 from ..model.entity.Aluno import Aluno
 from ..model.dao.RealizarInscricaoDao import RelizarInscricaoDao
+from datetime import datetime
 
 
 class ControleRealizarInscricao:
@@ -20,6 +21,7 @@ class ControleRealizarInscricao:
         # Consulta as Disiplinas que o aluno pode se inscrever
         disciplinasAluno = realizarInscricaoDao.verificarDisciplinaAluno(aluno, where)
 
+        _break = False
         # Remove as disciplinas que tem pré-requisitos que não foram concluidos
         for indice, disciplina in enumerate(disciplinasAluno):
             if len(disciplina.get_preRequisito()) > 0:
@@ -27,6 +29,11 @@ class ControleRealizarInscricao:
                     for disciplinaConc in aluno.get_disciplinasConcluidas():
                         if preRec.get_siglaDisc() != disciplinaConc.get_siglaDisc():
                             del disciplinasAluno[indice]
+                            _break = True
+                            break
+                        
+                    if _break:
+                        break
 
         # Monta lista com as ofertas das Disciplinas
         listaOfertas = []
@@ -77,7 +84,26 @@ class ControleRealizarInscricao:
 
 
     def confirmarInscricao(self, listaIdsOfertas: list, aluno: Aluno) -> bool:
-        pass
+        realizarInscricaoDao = RelizarInscricaoDao()
+        listaOfertas = []
+        # Consulta as ofertas que foram selecinadas
+        for id in listaIdsOfertas:
+            oferta = realizarInscricaoDao.consultaOfertasId(id)
+            listaOfertas.append(oferta)
+
+        # Monta as inscrições
+        listaInscricao = []
+        for oferta in listaOfertas:
+            inscricao = Inscricao()
+            inscricao.set_ofertaDisciplina(oferta)
+            inscricao.set_aluno(aluno)
+            inscricao.set_dataInscricao(datetime.now())
+            listaInscricao.append(inscricao)
+
+        for inscricao in listaInscricao:
+            realizarInscricaoDao.inserirInscricao(inscricao)
+
+        return True
 
 
     def adicionarListaEspera(self, insc: Inscricao) -> list:

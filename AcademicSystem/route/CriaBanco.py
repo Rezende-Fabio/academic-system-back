@@ -3,6 +3,11 @@ from flask import Blueprint, jsonify, Response, flash
 from ..model.dao.Schema import criaTabelas
 import json
 
+from ..controller.ControleRealizarInscricao import ControleRealizarInscricao
+from ..model.entity.Aluno import Aluno
+from ..model.entity.Disciplina import Disciplina
+from ..model.entity.Curso import Curso
+
 criarBancoBlueprint = Blueprint("criarBancoBlueprint", __name__)
 
 @criarBancoBlueprint.route("/criaBanco")

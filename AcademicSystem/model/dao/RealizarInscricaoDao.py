@@ -5,14 +5,22 @@ from ..entity.Turma import Turma
 from ..entity.Horario import Horario
 from ..entity.Professor import Professor
 from ..entity.Sala import Sala
+from ..entity.Inscricao import Inscricao
 from .Conexao import Conexao
 
 class RelizarInscricaoDao:
 
-    def verificarCursoAluno(self, aluno: Aluno):
+    def inserirInscricao(self, inscricao: Inscricao) -> None:
         conexao = Conexao()
         conexao.conect()
-        conexao.execute("SELECT curso.id FROM curso")
+        parametros = (
+            inscricao.get_dataInscricao(),
+            1,
+            inscricao.get_aluno().get_idAluno(),
+            inscricao.get_ofertaDisciplina().get_idOferta(),
+        )
+        conexao.execute(f"INSERT INTO disciplina (dataInscricao, ativoInscricao, idAlunoInsc, idOfertaInsc) VALUES (?, ?, ?, ?)", parametros)
+        conexao.commit()
 
 
     def verificarDisciplinaAluno(self, aluno: Aluno, disciplinaConc: str) -> list[Disciplina]:
@@ -190,7 +198,7 @@ class RelizarInscricaoDao:
     def consultaQtdeAlunosTurma(self, idTurma: int) -> int:
         conexao = Conexao()
         conexao.conect()
-        conexao.execute(f"SELECT COUNT(*) FROM inscricao i INNER JOIN turma t ON i.idTurmaInsc = t.idTurma WHERE t.idTurma={idTurma};")
+        conexao.execute(f"SELECT COUNT(*) FROM inscricao i INNER JOIN ofertaDisciplina o ON i.idOfertaInsc = o.idTurma WHERE o.idOfertaDiscipina = {idTurma};")
 
         respDao = conexao.fetchall()
         conexao.disconnect()

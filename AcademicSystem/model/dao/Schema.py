@@ -127,30 +127,31 @@ def criaTabelas():
                             );
                             """)
         
-        #Tabela Lista Espera
-        conexao.execute("""CREATE TABLE IF NOT EXISTS listaDeEspera (
-                            idlistaDeEspera INTEGER NOT NULL PRIMARY KEY,
-                            ativoLista BOOLEAN NOT NULL
-                            );
-                        """)
-        
         #Tabela Inscrição
         conexao.execute("""CREATE TABLE IF NOT EXISTS inscricao (
                             idInscricao INTEGER NOT NULL PRIMARY KEY,
-                            dataIncricao DATE NULL,
+                            dataInscricao DATETIME NULL,
                             ativoInscricao BOOLEAN NOT NULL,
                             idAlunoInsc INTEGER NOT NULL,
-                            idTurmaInsc INTEGER NOT NULL,
-                            idListaInsc INTEGER NOT NULL,
-                            FOREIGN KEY (idAlunoInsc) REFERENCES aluno
-                            (idAluno)
+                            idOfertaInsc INTEGER NOT NULL,
+                            FOREIGN KEY (idAlunoInsc) REFERENCES aluno (idAluno)
                             ON DELETE CASCADE ON UPDATE CASCADE,
-                            FOREIGN KEY (idTurmaInsc) REFERENCES turma (idTurma)
-                            ON DELETE CASCADE ON UPDATE CASCADE,
-                            FOREIGN KEY (idListaInsc) REFERENCES listaDeEspera (idlistaDeEspera)
+                            FOREIGN KEY (idOfertaInsc) REFERENCES ofertaDisciplina (idOfertaDisciplina)
                             ON DELETE CASCADE ON UPDATE CASCADE
                             );
                         """)
+        
+        #Tabela Lista Espera
+        conexao.execute("""CREATE TABLE IF NOT EXISTS listaDeEspera (
+                            idlistaDeEspera INTEGER NOT NULL PRIMARY KEY,
+                            ativoLista BOOLEAN NOT NULL,
+                            entradaList DATETIME NOT NULL,
+                            idInscList INTEGER NOT NULL,
+                            FOREIGN KEY (idInscList) REFERENCES inscricao (idInscricao)
+                            ON DELETE CASCADE ON UPDATE CASCADE
+                            );
+                        """)
+           
         return True
     except:
         return False
