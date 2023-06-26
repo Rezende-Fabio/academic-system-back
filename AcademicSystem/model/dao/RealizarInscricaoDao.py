@@ -193,5 +193,6 @@ class RelizarInscricaoDao:
         conexao.execute(f"SELECT COUNT(*) FROM inscricao i INNER JOIN turma t ON i.idTurmaInsc = t.idTurma WHERE t.idTurma={idTurma};")
 
         respDao = conexao.fetchall()
+        conexao.disconnect()
 
         return respDao[0][0]

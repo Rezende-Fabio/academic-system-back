@@ -60,22 +60,20 @@ class ControleRealizarInscricao:
 
         # Verifica se a quantidade de crédito é maior que 20
         if somaCredito > 20:
-            return ([])
+            return [1]
         else:
-            diaSemana = ''
-            horaInicio = None
-            horaFim = None
             # Veririfica choque de horario
             for oferta in listaOfertas:
-                if oferta.get_turma().get_horario().get_diaSemana() == diaSemana:
-                    if oferta.get_turma().get_horario().get_horaInicio() == horaInicio and oferta.get_turma().get_horario().get_horaFim() == horaFim:
-                        return ([])
-                
-                diaSemana = oferta.get_turma().get_horario().get_diaSemana()
-                horaInicio = oferta.get_turma().get_horario().get_horaInicio()
-                horaFim = oferta.get_turma().get_horario().get_horaFim()
-
-        return [listaIdOfertas, ofertasIndisponives]
+                for oferta2 in listaOfertas:
+                    if oferta.get_turma().get_idTurma() != oferta2.get_turma().get_idTurma(): #Verifica se é a mesma turma
+                        if oferta.get_turma().get_horario().get_diaSemana() == oferta2.get_turma().get_horario().get_diaSemana(): #Verifica se é o mesmo dia na semana
+                            if oferta.get_turma().get_horario().get_horaInicio() == oferta2.get_turma().get_horario().get_horaInicio(): #Verifica se a hora início é igual
+                                if oferta.get_turma().get_horario().get_horaFim() == oferta2.get_turma().get_horario().get_horaFim(): #Verifica se a hora fim é igual
+                                    return [2]
+                            elif oferta.get_turma().get_horario().get_horaFim() == oferta2.get_turma().get_horario().get_horaFim():
+                                return [2]
+        
+        return [[ofertaDisp.toJson() for ofertaDisp in listaOfertas], [ofertaInd.toJson() for ofertaInd in ofertasIndisponives]]
 
 
     def confirmarInscricao(self) -> bool:
