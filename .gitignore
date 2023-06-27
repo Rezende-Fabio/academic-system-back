@@ -1,2 +1,10 @@
 venvWin
 .vscode
+__pycache__
+AcademicSystem.db
+.mypy_cache
+.pytest_cache
+.coverage
+htmlcov
+debug.py
+*.txt
