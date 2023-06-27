@@ -204,18 +204,19 @@ class RelizarInscricaoDao:
         return horarioTurma
     
 
-    def consultaInscricao(self, idOferta: int) -> Inscricao:
+    def consultaListaEspera(self, idDiciplina: int) -> ListaEspera:
         conexao = Conexao()
         conexao.conect()
-        conexao.execute(f"SELECT * FROM inscricao insc WHERE insc.idOfertaInsc = {idOferta}")
+        conexao.execute(f"SELECT * FROM listaDeEspera list WHERE list.idDiscList = {idDiciplina}")
         respDao = conexao.fetchall()
         for inscricao in respDao:
-            inscricaoOferta = Inscricao()
-            inscricaoOferta.set_idInscricao(inscricao[0])
-            inscricaoOferta.set_dataInscricao(inscricao[1])
-            inscricaoOferta.set_ofertaDisciplina(self.consultaOfertasId(inscricao[4]))
+            listaDeEspera = ListaEspera()
+            listaDeEspera.set_idLista(inscricao[0])
+            listaDeEspera.set_ativoLista(inscricao[1])
+            listaDeEspera.set_dataEntrada(inscricao[2])
+            listaDeEspera.set_disciplina(self.consultaDisciplina(inscricao[4]))
 
-        return inscricaoOferta
+        return listaDeEspera
 
 
     def consultaQtdeAlunosTurma(self, idOferta: int) -> int:
@@ -232,16 +233,17 @@ class RelizarInscricaoDao:
             return 0
         
 
-    def inserirListaEspera(self, inscricao: Inscricao) -> bool:
+    def inserirListaEspera(self, listaEspera: ListaEspera) -> bool:
         try:
             conexao = Conexao()
             conexao.conect()
             parametros = (
                 1,
                 datetime.now(),
-                inscricao.get_idInscricao(),
+                listaEspera.get_aluno().get_idAluno(),
+                listaEspera.get_disciplina().get_idDisciplina()
             )
-            conexao.execute(f"INSERT INTO listaDeEspera (ativoLista, entradaList, idInscList) VALUES (?, ?, ?)", parametros)
+            conexao.execute(f"INSERT INTO listaDeEspera (ativoLista, entradaList, idAlunoList, idDiscList) VALUES (?, ?, ?, ?)", parametros)
             conexao.commit()
             return True
         except Exception as erro:

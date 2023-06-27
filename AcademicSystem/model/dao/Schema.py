@@ -146,8 +146,11 @@ def criaTabelas():
                             idlistaDeEspera INTEGER NOT NULL PRIMARY KEY,
                             ativoLista BOOLEAN NOT NULL,
                             entradaList DATETIME NOT NULL,
-                            idInscList INTEGER NOT NULL,
-                            FOREIGN KEY (idInscList) REFERENCES inscricao (idInscricao)
+                            idAlunoList INTEGER NOT NULL,
+                            idDiscList INTEGER NOT NULL,
+                            FOREIGN KEY (idAlunoList) REFERENCES aluno (idAluno)
+                            ON DELETE CASCADE ON UPDATE CASCADE,
+                            FOREIGN KEY (idDiscList) REFERENCES disciplina (idDisciplina)
                             ON DELETE CASCADE ON UPDATE CASCADE
                             );
                         """)

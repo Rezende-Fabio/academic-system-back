@@ -118,11 +118,13 @@ class ControleRealizarInscricao:
         # Consulta a oferta que foi enviada
         oferta = realizarInscricaoDao.consultaOfertasId(idOferta)
 
-        # Consulta a inscrição
-        inscricao = realizarInscricaoDao.consultaInscricao(oferta.get_idOferta())
-        inscricao.set_aluno(aluno)
+        lsitaEspera = ListaEspera()
+        lsitaEspera.set_dataEntrada(datetime.now())
+        lsitaEspera.set_ativoLista(True)
+        lsitaEspera.set_disciplina(oferta.get_disciplina())
+        lsitaEspera.set_aluno(aluno)
         
-        if realizarInscricaoDao.inserirListaEspera(inscricao):
+        if realizarInscricaoDao.inserirListaEspera(lsitaEspera):
             return True
         else:
             return False
