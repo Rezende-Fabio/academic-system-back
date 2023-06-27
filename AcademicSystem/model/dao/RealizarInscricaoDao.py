@@ -249,4 +249,20 @@ class RelizarInscricaoDao:
         except Exception as erro:
             print(sys.exc_info()[0], erro)
             return False
+        
+
+    def verificarAlunoLista(self, listaEspera: ListaEspera) -> int:
+        try:
+            conexao = Conexao()
+            conexao.conect()
+            conexao.execute(f"SELECT COUNT(*) FROM listaDeEspera list WHERE list.idAlunoList = {listaEspera.get_aluno().get_idAluno()} AND list.idDiscList = {listaEspera.get_disciplina().get_idDisciplina()}")
+            respDao = conexao.fetchall()
+            if respDao[0][0] > 0:
+                return 1
+            else:
+                return 2
+            
+        except Exception as erro:
+            print(sys.exc_info()[0], erro)
+            return 3
 

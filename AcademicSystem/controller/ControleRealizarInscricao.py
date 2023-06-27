@@ -113,18 +113,26 @@ class ControleRealizarInscricao:
             return False
 
 
-    def adicionarListaEspera(self, idOferta: int, aluno: Aluno) -> bool:
+    def adicionarListaEspera(self, idOferta: int, aluno: Aluno) -> int:
         realizarInscricaoDao = RelizarInscricaoDao()
         # Consulta a oferta que foi enviada
         oferta = realizarInscricaoDao.consultaOfertasId(idOferta)
 
-        lsitaEspera = ListaEspera()
-        lsitaEspera.set_dataEntrada(datetime.now())
-        lsitaEspera.set_ativoLista(True)
-        lsitaEspera.set_disciplina(oferta.get_disciplina())
-        lsitaEspera.set_aluno(aluno)
-        
-        if realizarInscricaoDao.inserirListaEspera(lsitaEspera):
-            return True
+        listaEspera = ListaEspera()
+        listaEspera.set_dataEntrada(datetime.now())
+        listaEspera.set_ativoLista(True)
+        listaEspera.set_disciplina(oferta.get_disciplina())
+        listaEspera.set_aluno(aluno)
+
+        #Verifica se o aluno já está na lista de espera de na materia que foi selecionada
+        respDao = realizarInscricaoDao.verificarAlunoLista(listaEspera)
+
+        if respDao == 2:
+            if realizarInscricaoDao.inserirListaEspera(listaEspera):
+                return 1
+            else:
+                return 2
+        elif respDao == 1:
+            return 3
         else:
-            return False
+            return 4

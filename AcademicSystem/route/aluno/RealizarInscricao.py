@@ -59,3 +59,28 @@ def cofirmarIncricao():
         return Response(json.dumps({"msg": "Isncrições incluidas com sucesso"}), status=200, mimetype="application/json")
     else:
         return Response(json.dumps({"msg": "Algo deu arrado"}), status=400, mimetype="application/json")
+    
+
+@realizarInscricaoBlue.route("/adicionar-lista-espera", methods=["POST"])
+def adicionarListaEsepra():
+    data = request.get_json()
+    aluno = Aluno()
+    curso = Curso()
+    disciplina = Disciplina()
+    aluno.toAluno(data["aluno"])
+    curso.toCurso(data["aluno"]["cursoMatriculado"])
+    aluno.set_cursoMatruculado(curso)
+    listaDisciplinasConc = []
+    for disciplinaConc in data["aluno"]["disciplinasConcluidas"]:
+        disciplina.toDisciplina(disciplinaConc)
+        listaDisciplinasConc.append(disciplina)
+    aluno.set_disciplinasConcluidas(listaDisciplinasConc)
+    controleRealizarIsncricao = ControleRealizarInscricao()
+    respControler = controleRealizarIsncricao.adicionarListaEspera(data["idOferta"], aluno)
+    if respControler == 2 or respControler == 4:
+        return Response(json.dumps({"msg": "Algo deu arrado"}), status=400, mimetype="application/json")
+    elif respControler == 1:
+        return Response(json.dumps({"msg": "Adicionado com sucesso"}), status=200, mimetype="application/json")
+    else:
+        return Response(json.dumps({"msg": "Aluno ja está na lista de espera dessa matéria"}), status=400, mimetype="application/json")
+    
