@@ -40,14 +40,22 @@ def verificarRequisitos():
         return Response(json.dumps({"ofertasDisponiveis": respControler[0], "ofertasIndisponiveis": respControler[1]}), status=200, mimetype="application/json")
     
 
-@realizarInscricaoBlue.route("/confirma-incricao", methods=["POST"])
+@realizarInscricaoBlue.route("/confirma-inscricao", methods=["POST"])
 def cofirmarIncricao():
-    controleRealizarInscricao = ControleRealizarInscricao()
     data = request.get_json()
-    respControler = controleRealizarInscricao.verificarRequisitos(data["listaIds"])
-    if respControler[0] == 1:
-        return Response(json.dumps({"info": "LIMITE", "msg": "Limite de crédito foi atingido."}), status=400, mimetype="application/json")
-    elif respControler[0] == 2:
-        return Response(json.dumps({"info": "CHOQUE", "msg": "A choque do horário entre as matérias selecionadas."}), status=400, mimetype="application/json")
+    aluno = Aluno()
+    curso = Curso()
+    disciplina = Disciplina()
+    aluno.toAluno(data["aluno"])
+    curso.toCurso(data["aluno"]["cursoMatriculado"])
+    aluno.set_cursoMatruculado(curso)
+    listaDisciplinasConc = []
+    for disciplinaConc in data["aluno"]["disciplinasConcluidas"]:
+        disciplina.toDisciplina(disciplinaConc)
+        listaDisciplinasConc.append(disciplina)
+    aluno.set_disciplinasConcluidas(listaDisciplinasConc)
+    controleRealizarIsncricao = ControleRealizarInscricao()
+    if controleRealizarIsncricao.confirmarInscricao(data["listaIds"], aluno):
+        return Response(json.dumps({"msg": "Isncrições incluidas com sucesso"}), status=200, mimetype="application/json")
     else:
-        return Response(json.dumps({"ofertasDisponiveis": respControler[0], "ofertasIndisponiveis": respControler[1]}), status=200, mimetype="application/json")
+        return Response(json.dumps({"msg": "Algo deu arrado"}), status=400, mimetype="application/json")
