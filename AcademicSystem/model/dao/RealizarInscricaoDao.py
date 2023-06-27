@@ -6,7 +6,9 @@ from ..entity.Horario import Horario
 from ..entity.Professor import Professor
 from ..entity.Sala import Sala
 from ..entity.Inscricao import Inscricao
+from ..entity.ListaEspera import ListaEspera
 from .Conexao import Conexao
+from datetime import datetime
 import sys
 
 class RelizarInscricaoDao:
@@ -202,6 +204,20 @@ class RelizarInscricaoDao:
         return horarioTurma
     
 
+    def consultaInscricao(self, idOferta: int) -> Inscricao:
+        conexao = Conexao()
+        conexao.conect()
+        conexao.execute(f"SELECT * FROM inscricao insc WHERE insc.idOfertaInsc = {idOferta}")
+        respDao = conexao.fetchall()
+        for inscricao in respDao:
+            inscricaoOferta = Inscricao()
+            inscricaoOferta.set_idInscricao(inscricao[0])
+            inscricaoOferta.set_dataInscricao(inscricao[1])
+            inscricaoOferta.set_ofertaDisciplina(self.consultaOfertasId(inscricao[4]))
+
+        return inscricaoOferta
+
+
     def consultaQtdeAlunosTurma(self, idOferta: int) -> int:
         conexao = Conexao()
         conexao.conect()
@@ -214,3 +230,21 @@ class RelizarInscricaoDao:
             return respDao[0][0]
         else:
             return 0
+        
+
+    def inserirListaEspera(self, inscricao: Inscricao) -> bool:
+        try:
+            conexao = Conexao()
+            conexao.conect()
+            parametros = (
+                1,
+                datetime.now(),
+                inscricao.get_idInscricao(),
+            )
+            conexao.execute(f"INSERT INTO listaDeEspera (ativoLista, entradaList, idInscList) VALUES (?, ?, ?)", parametros)
+            conexao.commit()
+            return True
+        except Exception as erro:
+            print(sys.exc_info()[0], erro)
+            return False
+

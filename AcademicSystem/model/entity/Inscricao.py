@@ -4,9 +4,13 @@ from .OfertaDisciplina import OfertaDisciplina
 
 
 class Inscricao:
+    idInscricao: int
     dataInscricao: datetime
     aluno: Aluno
     ofertaDisciplina: OfertaDisciplina
+
+    def set_idInscricao(self, id: int) -> None:
+        self.idInscricao = id
 
     def set_dataInscricao(self, dataInscricao: datetime) -> None:
         self.dataInscricao = dataInscricao
@@ -16,6 +20,9 @@ class Inscricao:
 
     def set_ofertaDisciplina(self, ofertaDisciplina: OfertaDisciplina) -> None:
         self.ofertaDisciplina = ofertaDisciplina
+
+    def get_idInscricao(self) -> int:
+        return self.idInscricao
 
     def get_dataInscricao(self) -> datetime:
         return self.dataInscricao

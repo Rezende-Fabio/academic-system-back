@@ -113,17 +113,16 @@ class ControleRealizarInscricao:
             return False
 
 
-    def adicionarListaEspera(self, insc: Inscricao) -> list:
-        IDTURMA = insc.get_ofertaDisciplina().get_turma().get_idTurma()
-
+    def adicionarListaEspera(self, idOferta: int, aluno: Aluno) -> bool:
         realizarInscricaoDao = RelizarInscricaoDao()
-        qtdMaximaAlunos = realizarInscricaoDao.consultaTurma(IDTURMA).get_qtdeMaximaAluno()
-        qtdAlunosTurma = realizarInscricaoDao.consultaQtdeAlunosTurma(IDTURMA)
+        # Consulta a oferta que foi enviada
+        oferta = realizarInscricaoDao.consultaOfertasId(idOferta)
 
-        if qtdAlunosTurma == qtdMaximaAlunos:
-            lista = ListaEspera()
-
-            lista.set_listaEspera(insc)
-            lista.set_ativoLista(True)
-
-            return lista
+        # Consulta a inscrição
+        inscricao = realizarInscricaoDao.consultaInscricao(oferta.get_idOferta())
+        inscricao.set_aluno(aluno)
+        
+        if realizarInscricaoDao.inserirListaEspera(inscricao):
+            return True
+        else:
+            return False
