@@ -38,3 +38,16 @@ def verificarRequisitos():
         return Response(json.dumps({"info": "CHOQUE", "msg": "A choque do horário entre as matérias selecionadas."}), status=400, mimetype="application/json")
     else:
         return Response(json.dumps({"ofertasDisponiveis": respControler[0], "ofertasIndisponiveis": respControler[1]}), status=200, mimetype="application/json")
+    
+
+@realizarInscricaoBlue.route("/confirma-incricao", methods=["POST"])
+def cofirmarIncricao():
+    controleRealizarInscricao = ControleRealizarInscricao()
+    data = request.get_json()
+    respControler = controleRealizarInscricao.verificarRequisitos(data["listaIds"])
+    if respControler[0] == 1:
+        return Response(json.dumps({"info": "LIMITE", "msg": "Limite de crédito foi atingido."}), status=400, mimetype="application/json")
+    elif respControler[0] == 2:
+        return Response(json.dumps({"info": "CHOQUE", "msg": "A choque do horário entre as matérias selecionadas."}), status=400, mimetype="application/json")
+    else:
+        return Response(json.dumps({"ofertasDisponiveis": respControler[0], "ofertasIndisponiveis": respControler[1]}), status=200, mimetype="application/json")

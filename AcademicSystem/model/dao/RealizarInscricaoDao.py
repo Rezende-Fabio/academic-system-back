@@ -210,4 +210,7 @@ class RelizarInscricaoDao:
         respDao = conexao.fetchall()
         conexao.disconnect()
 
-        return respDao[0][0]
+        if respDao:
+            return respDao[0][0]
+        else:
+            return 0

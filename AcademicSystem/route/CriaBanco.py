@@ -54,4 +54,5 @@ def teste():
     aluno.set_nomeAluno("Jose Alfonso")
     aluno.set_protuarioAluno("BP301845")
     aluno.set_disciplinasConcluidas([disciplina])
+    controle.verificarRequisitos([5, 6, 1])
     controle.confirmarInscricao([5, 6, 1], aluno)
