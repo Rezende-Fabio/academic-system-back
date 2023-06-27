@@ -40,12 +40,6 @@ class Turma:
     def get_horario(self) -> Horario:
         return self.horario    
 
-    def verficaTurmaLotada(self) -> bool:
-        pass
-
-    def verificaQtdeAlunoMatriculado(self) -> bool:
-        pass
-
     def toJson(self) -> dict:
         json = {
             "qtdeMaximaAluno": self.qtdeMaximaAluno,

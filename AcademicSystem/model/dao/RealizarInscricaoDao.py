@@ -7,20 +7,26 @@ from ..entity.Professor import Professor
 from ..entity.Sala import Sala
 from ..entity.Inscricao import Inscricao
 from .Conexao import Conexao
+import sys
 
 class RelizarInscricaoDao:
 
-    def inserirInscricao(self, inscricao: Inscricao) -> None:
-        conexao = Conexao()
-        conexao.conect()
-        parametros = (
-            inscricao.get_dataInscricao(),
-            1,
-            inscricao.get_aluno().get_idAluno(),
-            inscricao.get_ofertaDisciplina().get_idOferta(),
-        )
-        conexao.execute(f"INSERT INTO disciplina (dataInscricao, ativoInscricao, idAlunoInsc, idOfertaInsc) VALUES (?, ?, ?, ?)", parametros)
-        conexao.commit()
+    def inserirInscricao(self, inscricao: Inscricao) -> bool:
+        try:
+            conexao = Conexao()
+            conexao.conect()
+            parametros = (
+                inscricao.get_dataInscricao(),
+                1,
+                inscricao.get_aluno().get_idAluno(),
+                inscricao.get_ofertaDisciplina().get_idOferta(),
+            )
+            conexao.execute(f"INSERT INTO inscricao (dataInscricao, ativoInscricao, idAlunoInsc, idOfertaInsc) VALUES (?, ?, ?, ?)", parametros)
+            conexao.commit()
+            return True
+        except Exception as erro:
+            print(sys.exc_info()[0], erro)
+            return False
 
 
     def verificarDisciplinaAluno(self, aluno: Aluno, disciplinaConc: str) -> list[Disciplina]:
@@ -195,10 +201,11 @@ class RelizarInscricaoDao:
         conexao.disconnect()
         return horarioTurma
     
-    def consultaQtdeAlunosTurma(self, idTurma: int) -> int:
+
+    def consultaQtdeAlunosTurma(self, idOferta: int) -> int:
         conexao = Conexao()
         conexao.conect()
-        conexao.execute(f"SELECT COUNT(*) FROM inscricao i INNER JOIN ofertaDisciplina o ON i.idOfertaInsc = o.idTurma WHERE o.idOfertaDiscipina = {idTurma};")
+        conexao.execute(f"SELECT COUNT(*) FROM inscricao i INNER JOIN ofertaDisciplina o ON i.idOfertaInsc = o.idOfertaDisciplina WHERE o.idOfertaDisciplina = {idOferta};")
 
         respDao = conexao.fetchall()
         conexao.disconnect()

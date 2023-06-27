@@ -31,7 +31,7 @@ class ControleRealizarInscricao:
                             del disciplinasAluno[indice]
                             _break = True
                             break
-                        
+
                     if _break:
                         break
 
@@ -56,7 +56,7 @@ class ControleRealizarInscricao:
         
         #  Verifica a quantidade de alunos nas turmas
         for oferta in listaOfertas:
-            qtdAlunosTurma = realizarInscricaoDao.consultaQtdeAlunosTurma(oferta.get_turma().get_idTurma())
+            qtdAlunosTurma = realizarInscricaoDao.consultaQtdeAlunosTurma(oferta.get_idOferta())
             if qtdAlunosTurma >= oferta.get_turma().get_qtdeMaximaAluno():
                 ofertasIndisponives.append(oferta)
         
@@ -100,10 +100,17 @@ class ControleRealizarInscricao:
             inscricao.set_dataInscricao(datetime.now())
             listaInscricao.append(inscricao)
 
+        retorno = False
         for inscricao in listaInscricao:
-            realizarInscricaoDao.inserirInscricao(inscricao)
+            if realizarInscricaoDao.inserirInscricao(inscricao):
+                retorno = True
+            else:
+                retorno = False
 
-        return True
+        if retorno:
+            return True
+        else:
+            return False
 
 
     def adicionarListaEspera(self, insc: Inscricao) -> list:
